@@ -14,12 +14,15 @@ export function getTiffData(user){
         let tiff = window.URL.createObjectURL(this.response, {type: 'image/tiff'});
         let tiffData = await exifr.parse(tiff,true)
             .then(output => {
+                window.URL.revokeObjectURL(tiff);
+
                 let result1 = JSON.parse(output['65104']);
                 let result2 = JSON.parse(output['65105']);
 
                 return new TiffData(result1.calibParams[0].param.B,result1.calibParams[0].param.R,result1.calibParams[0].param.F,result1.calibParams[0].param.RBFOffset,result2.emissivity);
             })
-        console.log(tiffData)
+        console.log(tiffData);
+        getTiffData(user);
     }
     xmlHttp.send( null );
 }

@@ -32,6 +32,5 @@ window.addEventListener('DOMContentLoaded', () => {
     getImage(user);
 
     //get data from tiff tags
-    getTiffData(user)
-
+    getTiffData(user);
 });
