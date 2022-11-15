@@ -21,7 +21,10 @@ export function getTiffData(user){
 
                 return new TiffData(result1.calibParams[0].param.B,result1.calibParams[0].param.R,result1.calibParams[0].param.F,result1.calibParams[0].param.RBFOffset,result2.emissivity);
             })
+        let arrayBuffer = await xmlHttp.response.arrayBuffer();
+
         console.log(tiffData);
+
         getTiffData(user);
     }
     xmlHttp.send( null );
