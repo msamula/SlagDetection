@@ -5,6 +5,7 @@ import '../css/custom.css';
 import {User} from './Models/userModel';
 import {getToken} from "./DataAccess/getToken";
 import {getImage} from "./DataAccess/getImage";
+import {getTiffData} from "./DataAccess/getTiffData";
 
 
 //login data
@@ -29,5 +30,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //get image
     getImage(user);
+
+    //get data from tiff tags
+    getTiffData(user)
 
 });
