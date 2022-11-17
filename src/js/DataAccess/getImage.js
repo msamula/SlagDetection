@@ -3,11 +3,15 @@
 import {token} from "./getToken";
 import {checkToken} from "../DataHandler/checkToken";
 
+let start, end, sumTime = 0, counter = 0;
+
 export async function getImage(user)
 {
+    start = new Date();
+
     let image = document.getElementById('img');
 
-    await checkToken(user);
+    //await checkToken(user);
 
     let response = await fetch(`http://${user.ip}/api/images/live`, {
         headers: {
@@ -25,6 +29,14 @@ export async function getImage(user)
         image.onload = () => {
             URL.revokeObjectURL(image.src);
         }
+
+
+        //TIME
+        end = new Date();
+        sumTime += end.getTime()-start.getTime();
+        counter++;
+        document.getElementById('bmpTime').innerHTML = (1000/(sumTime/counter)).toFixed(3) + ' HZ [GET IMAGE]';
+
 
         //start new request after the previous one is done
         getImage(user);

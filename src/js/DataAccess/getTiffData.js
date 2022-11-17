@@ -2,7 +2,12 @@ import exifr from 'exifr';
 import {token} from "./getToken";
 import {TiffData} from "../Models/tiffDataModel";
 
+let start, end, sumTime = 0, counter = 0;
+
 export function getTiffData(user){
+
+    start = new Date();
+
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.open( 'GET', `http://${user.ip}/api/images/live`, true); // false for synchronous request
     xmlHttp.setRequestHeader('accept', 'image/tiff');
@@ -21,9 +26,16 @@ export function getTiffData(user){
 
                 return new TiffData(result1.calibParams[0].param.B,result1.calibParams[0].param.R,result1.calibParams[0].param.F,result1.calibParams[0].param.RBFOffset,result2.emissivity);
             })
+
         let arrayBuffer = await xmlHttp.response.arrayBuffer();
 
-        console.log(tiffData);
+
+        //TIME
+        end = new Date();
+        sumTime += end.getTime()-start.getTime();
+        counter++;
+        //console.log((sumTime/counter) + ' ms [GET TIFF TAGS]');
+        document.getElementById('tiffTime').innerHTML = (1000/(sumTime/counter)).toFixed(3) + ' HZ [GET TIFF TAGS]';
 
         getTiffData(user);
     }

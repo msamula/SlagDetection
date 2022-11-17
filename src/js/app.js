@@ -9,7 +9,7 @@ import {getTiffData} from "./DataAccess/getTiffData";
 
 
 //login data
-let ipAddress = 'localhost:8080';
+let ipAddress = '169.254.64.2';       /* '192.168.3.20'  'localhost:8080' */
 let clientID = 'irsxApp';
 let clientSecret = 'MnrY2L86pEQr53!6';
 let username = 'administrator';
@@ -20,13 +20,14 @@ let height = 240;*/
 
 
 //--- MAIN PART ---
+
+//create user
+let user = new User(ipAddress,username,password,clientID,clientSecret);
+
+//get token
+getToken(user.ip,user.clientID,user.clientSecret,user.username,user.password);
+
 window.addEventListener('DOMContentLoaded', () => {
-
-    //create user
-    let user = new User(ipAddress,username,password,clientID,clientSecret);
-
-    //get token
-    getToken(user.ip,user.clientID,user.clientSecret,user.username,user.password);
 
     //get image
     getImage(user);
