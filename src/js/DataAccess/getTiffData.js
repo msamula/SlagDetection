@@ -16,10 +16,10 @@ function imgLoaded(response, user) {
     UTIF.decodeImages(response, decoded)
     let Img16Bit = decoded[1].data;
 
-    let highestPixel = highestPixelValue(Img16Bit, decoded[0].width, decoded[0].height);
-    let highestTemp = pixelToTemp(tiffData, highestPixel);
+    let highestPixel = highestPixelValue(tiffData, Img16Bit, decoded[0].width, decoded[0].height);
+    //let highestTemp = pixelToTemp(tiffData, highestPixel);
 
-    document.getElementById('temp').innerHTML = (highestTemp-273.15).toFixed(2) +' °C';
+    document.getElementById('temp').innerHTML = (highestPixel-273.15).toFixed(2) +' °C';
 
 
     //TIME

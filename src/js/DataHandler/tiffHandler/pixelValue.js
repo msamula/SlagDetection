@@ -14,15 +14,28 @@ export function pixelToTemp(tiffData,pixelValue) {
     return tiffData.B/(Math.log((tiffData.R/(pixelValue-tiffData.RBFOffset))+tiffData.F));
 }
 
-export function highestPixelValue(img, imgWidth, imgHeight){
+export function highestPixelValue(tiffData,img, imgWidth, imgHeight){
+    let canvas = document.getElementById("imgCanvas");
+    canvas.width  = imgWidth;
+    canvas.height = imgHeight;
+    let ctx = canvas.getContext("2d");
+    ctx.fillStyle = "rgba("+255+","+0+","+0+","+1+")";
+
+    ctx.clearRect(0, 0, imgWidth, imgHeight);
+
     let result=0;
     let counterX = 0;
 
     for (let y = 0; y < imgHeight; y++) {
         for (let x = 0; x < imgWidth; x++) {    //x-Achse
+
             let tmp = calcPixelValue(img,x,y,imgWidth);
+            tmp = pixelToTemp(tiffData, tmp)
             if(tmp > result){
                 result = tmp;
+            }
+            if(tmp > 303){                  //30 Grad
+                ctx.fillRect( x, y, 1, 1 );
             }
             counterX++;
         }
