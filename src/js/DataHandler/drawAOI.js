@@ -1,11 +1,10 @@
 // draw all aoi from the job
 
-export function drawAOI(coordinatesArray){
+export function drawAOI(coordinatesArray, width, height){
     let canvas = document.getElementById('aoi');
-    let img = document.getElementById('img');
 
-    canvas.width = img.width;
-    canvas.height = img.height;
+    canvas.width = width;
+    canvas.height = height;
 
     let ctx = canvas.getContext('2d');
 

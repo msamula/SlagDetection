@@ -2,6 +2,8 @@ import UTIF from '../Helper/utif';
 import {token} from "./getToken";
 import {TiffData} from "../Models/tiffDataModel";
 import {pixelHandler} from "../DataHandler/tiffHandler/pixelValue";
+import {job} from "./getJobInfo";
+import {drawAOI} from "../DataHandler/drawAOI";
 
 let start, end, sumTime = 0, counter = 0;
 let tiffData, tiffTagsLoaded = false;
@@ -14,6 +16,10 @@ function handleTiffData(response, user) {
         let result2 = JSON.parse(decoded[0].t65105);
 
         tiffData = new TiffData(result1.calibParams[0].param.B,result1.calibParams[0].param.R,result1.calibParams[0].param.F,result1.calibParams[0].param.RBFOffset,result2.emissivity);
+
+        //draw AOI
+        drawAOI(job[1], decoded[0].t256[0], decoded[0].t257[0]);        //t256 = image-width    t257 = image-height
+
         tiffTagsLoaded = true;
         console.log('tiff tags loaded');
     }

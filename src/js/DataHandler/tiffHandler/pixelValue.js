@@ -34,7 +34,7 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight){
             if(tmp > result){
                 result = tmp;
             }
-            if(tmp > 1273.15){                  //1273.15
+            if(tmp > 1300){                  //1027°C
                 ctx.fillRect( x, y, 1, 1 );
             }
             counterX++;

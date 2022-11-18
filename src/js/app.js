@@ -7,7 +7,6 @@ import {getToken} from "./DataAccess/getToken";
 import {getImage} from "./DataAccess/getImage";
 import {getTiffData} from "./DataAccess/getTiffData";
 import {getJobInfo} from "./DataAccess/getJobInfo";
-import {drawAOI} from "./DataHandler/drawAOI";
 
 
 //login data
@@ -16,9 +15,6 @@ let clientID = 'irsxApp';
 let clientSecret = 'MnrY2L86pEQr53!6';
 let username = 'administrator';
 let password = 'administrator';
-
-/*let width = 320;
-let height = 240;*/
 
 
 //--- MAIN PART ---
@@ -30,12 +26,9 @@ let user = new User(ipAddress,username,password,clientID,clientSecret);
 getToken(user.ip,user.clientID,user.clientSecret,user.username,user.password);
 
 //get Job Info
-let jobInfo = getJobInfo(user.ip, 'slag');
+getJobInfo(user.ip, 'slag');
 
 window.addEventListener('DOMContentLoaded', () => {
-
-    //draw AOI
-    drawAOI(jobInfo[1]);
 
     //get image
     getImage(user);
