@@ -1,4 +1,6 @@
 // 8 bit zu 16 bit verschoben und return des pixelwertes
+import {job} from "../../DataAccess/getJobInfo";
+
 function calcPixelValue(img, x, y, imgWidth) {
     let rX = x * 2;                                     //erster und zweiter array-eintrag ergeben zusammen den ersten pixel von 16 bit bzw 2 byte
     let rY = (imgWidth * y) * 2;
@@ -10,11 +12,11 @@ function calcPixelValue(img, x, y, imgWidth) {
     /*    The left shift operator (<<) shifts the first operand the specified number of bits to the left.*/
 }
 
-function pixelToTemp(tiffData,pixelValue) {
+export function pixelToTemp(tiffData,pixelValue) {
     return tiffData.B/(Math.log((tiffData.R/(pixelValue-tiffData.RBFOffset))+tiffData.F));
 }
 
-export function pixelHandler(tiffData,img, imgWidth, imgHeight){
+export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTempPixel){
     let canvas = document.getElementById("imgCanvas");
     canvas.width  = imgWidth;
     canvas.height = imgHeight;
@@ -26,18 +28,32 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight){
     let result=0;
     let counterX = 0;
 
-    for (let y = 0; y < imgHeight; y++) {
-        for (let x = 0; x < imgWidth; x++) {    //x-Achse
+    let X = job[1][0][1][0];
+    let xPlusWidth = job[1][0][2][0];
+    let Y = job[1][0][1][1];
+    let yPlusHeight = job[1][0][3][1];
 
-            let tmp = calcPixelValue(img,x,y,imgWidth);
-            tmp = pixelToTemp(tiffData, tmp)
-            if(tmp > result){
-                result = tmp;
+    for (let y = Y; y < yPlusHeight; y++) {
+        for (let x = X; x < xPlusWidth; x++) {    //x-Achse
+
+/*     for (let y = 0; y < imgHeight; y++) {
+         for (let x = 0; x < imgWidth; x++) {    //x-Achse*/
+
+            let pixelValue = calcPixelValue(img,x,y,imgWidth);
+
+            if(pixelValue >= areaTempPixel){
+
+                let temp = pixelToTemp(tiffData, pixelValue);
+
+                if(temp > result){
+                    result = temp;
+                }
+                if(temp > 1300){                  //1027°C
+                    ctx.fillRect( x, y, 1, 1 );
+                }
+
+                counterX++;
             }
-            if(tmp > 1300){                  //1027°C
-                ctx.fillRect( x, y, 1, 1 );
-            }
-            counterX++;
         }
     }
     document.getElementById('counterX').innerHTML = `scanned pixel: ${counterX}px [${((counterX/(imgWidth*imgHeight))*100).toFixed(3)}%]`;

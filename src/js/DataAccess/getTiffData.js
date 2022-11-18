@@ -1,12 +1,21 @@
 import UTIF from '../Helper/utif';
 import {token} from "./getToken";
 import {TiffData} from "../Models/tiffDataModel";
-import {pixelHandler} from "../DataHandler/tiffHandler/pixelValue";
+import {pixelHandler, pixelToTemp} from "../DataHandler/tiffHandler/pixelValue";
 import {job} from "./getJobInfo";
 import {drawAOI} from "../DataHandler/drawAOI";
 
 let start, end, sumTime = 0, counter = 0;
-let tiffData, tiffTagsLoaded = false;
+let tiffData, areaTempPixel,tiffTagsLoaded = false;
+
+function areaTempPixelValue(tiffData, temp){
+    for (let i = 0; i < Infinity; i++) {
+        if(temp<pixelToTemp(tiffData,i)){
+            return i-1;
+        }
+    }
+}
+
 
 function handleTiffData(response, user) {
     let decoded = UTIF.decode(response);
@@ -20,6 +29,11 @@ function handleTiffData(response, user) {
         //draw AOI
         drawAOI(job[1], decoded[0].t256[0], decoded[0].t257[0]);        //t256 = image-width    t257 = image-height
 
+        //areaTemp
+        areaTempPixel= areaTempPixelValue(tiffData, 750);
+        console.log(areaTempPixel);
+        console.log(pixelToTemp(tiffData,areaTempPixel));
+
         tiffTagsLoaded = true;
         console.log('tiff tags loaded');
     }
@@ -27,7 +41,7 @@ function handleTiffData(response, user) {
     UTIF.decodeImages(response, decoded)
     let Img16Bit = decoded[1].data;
 
-    let highestTemp = pixelHandler(tiffData, Img16Bit, decoded[0].width, decoded[0].height);
+    let highestTemp = pixelHandler(tiffData, Img16Bit, decoded[0].width, decoded[0].height, areaTempPixel);
 
     document.getElementById('temp').innerHTML = (highestTemp-273.15).toFixed(2) +' °C';
 
