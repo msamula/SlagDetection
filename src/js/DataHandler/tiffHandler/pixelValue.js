@@ -34,7 +34,7 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight){
             if(tmp > result){
                 result = tmp;
             }
-            if(tmp > 320){                  //47 Grad
+            if(tmp > 1273.15){                  //1273.15
                 ctx.fillRect( x, y, 1, 1 );
             }
             counterX++;

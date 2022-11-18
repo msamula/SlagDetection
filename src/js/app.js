@@ -6,10 +6,12 @@ import {User} from './Models/userModel';
 import {getToken} from "./DataAccess/getToken";
 import {getImage} from "./DataAccess/getImage";
 import {getTiffData} from "./DataAccess/getTiffData";
+import {getJobInfo} from "./DataAccess/getJobInfo";
+import {drawAOI} from "./DataHandler/drawAOI";
 
 
 //login data
-let ipAddress = '169.254.64.2';       /* '192.168.3.20'  'localhost:8080' */
+let ipAddress = 'localhost:8080';       /* '192.168.3.20'  'localhost:8080' */
 let clientID = 'irsxApp';
 let clientSecret = 'MnrY2L86pEQr53!6';
 let username = 'administrator';
@@ -27,7 +29,13 @@ let user = new User(ipAddress,username,password,clientID,clientSecret);
 //get token
 getToken(user.ip,user.clientID,user.clientSecret,user.username,user.password);
 
+//get Job Info
+let jobInfo = getJobInfo(user.ip, 'slag');
+
 window.addEventListener('DOMContentLoaded', () => {
+
+    //draw AOI
+    drawAOI(jobInfo[1]);
 
     //get image
     getImage(user);

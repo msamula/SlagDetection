@@ -1,17 +1,19 @@
 // draw all aoi from the job
 
 export function drawAOI(coordinatesArray){
-    let canvas = document.getElementById('imgCanvas');
+    let canvas = document.getElementById('aoi');
     let img = document.getElementById('img');
 
     canvas.width = img.width;
     canvas.height = img.height;
 
+    console.log(canvas.width);
+
     let ctx = canvas.getContext('2d');
 
     if(coordinatesArray.length > 0){
         for (let i = 0; i < coordinatesArray.length; i++) {
-            if(coordinatesArray[i][0] === 'Polygon' ||  coordinatesArray[i][0] === 'Line' ||  coordinatesArray[i][0] === 'Rect'){
+            if(coordinatesArray[i][0] === 'Polygon' ||  coordinatesArray[i][0] === 'Line' ||  coordinatesArray[i][0] === 'Rect' ||  coordinatesArray[i][0] === 'RectLine'){
                 ctx.beginPath();
                 ctx.moveTo(coordinatesArray[i][1][0], coordinatesArray[i][1][1]);
                 for (let j = 2; j < coordinatesArray[i].length; j++) {
