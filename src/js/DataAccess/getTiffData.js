@@ -4,14 +4,19 @@ import {TiffData} from "../Models/tiffDataModel";
 import {highestPixelValue, pixelToTemp} from "../DataHandler/tiffHandler/pixelValue";
 
 let start, end, sumTime = 0, counter = 0;
+let tiffData, tiffTagsLoaded = false;
 
 function imgLoaded(response, user) {
     let decoded = UTIF.decode(response);
 
-    let result1 = JSON.parse(decoded[0].t65104);
-    let result2 = JSON.parse(decoded[0].t65105);
+    if(!tiffTagsLoaded){
+        let result1 = JSON.parse(decoded[0].t65104);
+        let result2 = JSON.parse(decoded[0].t65105);
 
-    let tiffData = new TiffData(result1.calibParams[0].param.B,result1.calibParams[0].param.R,result1.calibParams[0].param.F,result1.calibParams[0].param.RBFOffset,result2.emissivity);
+        tiffData = new TiffData(result1.calibParams[0].param.B,result1.calibParams[0].param.R,result1.calibParams[0].param.F,result1.calibParams[0].param.RBFOffset,result2.emissivity);
+        tiffTagsLoaded = true;
+        console.log('tiff tags loaded');
+    }
 
     UTIF.decodeImages(response, decoded)
     let Img16Bit = decoded[1].data;
