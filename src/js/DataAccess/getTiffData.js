@@ -1,12 +1,12 @@
 import UTIF from '../Helper/utif';
 import {token} from "./getToken";
 import {TiffData} from "../Models/tiffDataModel";
-import {highestPixelValue, pixelToTemp} from "../DataHandler/tiffHandler/pixelValue";
+import {pixelHandler} from "../DataHandler/tiffHandler/pixelValue";
 
 let start, end, sumTime = 0, counter = 0;
 let tiffData, tiffTagsLoaded = false;
 
-function imgLoaded(response, user) {
+function handleTiffData(response, user) {
     let decoded = UTIF.decode(response);
 
     if(!tiffTagsLoaded){
@@ -21,10 +21,9 @@ function imgLoaded(response, user) {
     UTIF.decodeImages(response, decoded)
     let Img16Bit = decoded[1].data;
 
-    let highestPixel = highestPixelValue(tiffData, Img16Bit, decoded[0].width, decoded[0].height);
-    //let highestTemp = pixelToTemp(tiffData, highestPixel);
+    let highestTemp = pixelHandler(tiffData, Img16Bit, decoded[0].width, decoded[0].height);
 
-    document.getElementById('temp').innerHTML = (highestPixel-273.15).toFixed(2) +' °C';
+    document.getElementById('temp').innerHTML = (highestTemp-273.15).toFixed(2) +' °C';
 
 
     //TIME
@@ -50,7 +49,7 @@ export function getTiffData(user){
     xmlHttp.responseType = 'arraybuffer';
 
     xmlHttp.onload = function () {
-        imgLoaded(xmlHttp.response, user);
+        handleTiffData(xmlHttp.response, user);
     }
 
     xmlHttp.send( null );

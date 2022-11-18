@@ -10,11 +10,11 @@ function calcPixelValue(img, x, y, imgWidth) {
     /*    The left shift operator (<<) shifts the first operand the specified number of bits to the left.*/
 }
 
-export function pixelToTemp(tiffData,pixelValue) {
+function pixelToTemp(tiffData,pixelValue) {
     return tiffData.B/(Math.log((tiffData.R/(pixelValue-tiffData.RBFOffset))+tiffData.F));
 }
 
-export function highestPixelValue(tiffData,img, imgWidth, imgHeight){
+export function pixelHandler(tiffData,img, imgWidth, imgHeight){
     let canvas = document.getElementById("imgCanvas");
     canvas.width  = imgWidth;
     canvas.height = imgHeight;
@@ -34,7 +34,7 @@ export function highestPixelValue(tiffData,img, imgWidth, imgHeight){
             if(tmp > result){
                 result = tmp;
             }
-            if(tmp > 303){                  //30 Grad
+            if(tmp > 320){                  //47 Grad
                 ctx.fillRect( x, y, 1, 1 );
             }
             counterX++;
