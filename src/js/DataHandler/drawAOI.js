@@ -7,8 +7,6 @@ export function drawAOI(coordinatesArray){
     canvas.width = img.width;
     canvas.height = img.height;
 
-    console.log(canvas.width);
-
     let ctx = canvas.getContext('2d');
 
     if(coordinatesArray.length > 0){
