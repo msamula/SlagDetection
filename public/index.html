@@ -9,18 +9,58 @@
 <body class="container text-center" style="margin-top: 2%">
 <script src="./bundle.js"></script>
 
-<div class="outsideWrapper">
-    <div class="insideWrapper">
-        <img class="rounded coveredImage" id="img">
-        <canvas class="rounded coveringCanvas" id="imgCanvas" ></canvas>
-        <canvas class="rounded coveringCanvas" id="aoi" ></canvas>
+    <div class="container text-center">
+        <div class="row">
+
+            <div class="col-xxl-2">
+                <button class="myBtn">Status</button>
+                <button class="myBtn">Configure</button>
+            </div>
+
+            <div class="col-xxl-2">
+            </div>
+            <div class="col-xxl-2">
+            </div>
+            <div class="col-xxl-2">
+            </div>
+            <div class="col-xxl-2">
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-xxl-6">
+                <div class="outsideWrapper">
+                    <div class="insideWrapper">
+                        <img    class="rounded coveredImage"    id="img">
+                        <canvas class="rounded coveringCanvas"  id="imgCanvas" ></canvas>
+                        <canvas class="rounded coveringCanvas"  id="aoi" ></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xxl-6 text-start" style="padding-left: 10%">
+
+                <p id="date"        class="myText"  >Date/Time: 21.11.2022  00:00</p>
+                <p id="vessel"      class="myText"  >BOF Vessel: 1</p>
+                <p id="heat"        class="myText"  >Heat #: 8729</p>
+                <p id="tap"         class="myText"  >Tap Temperature: XXXX°C</p>
+
+                <div id="alarm" class="alert sign" role="alert" style="background-color: rgba(0, 255, 0,1)">
+                    ALARM
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <p hidden id="bmpTime"     style="color: white; font-weight: bold;font-size: xx-large; font-family: Calibri;"></p>
+            <p hidden id="tiffTime"    style="color: white; font-weight: bold;font-size: xx-large; font-family: Calibri;"></p>
+            <p hidden id="counterX"    style="color: white; font-weight: bold;font-size: xx-large; font-family: Calibri;"></p>
+            <p hidden id="temp"        style="color: white; font-weight: bold;font-size: xx-large; font-family: Calibri;"></p>
+        </div>
+
     </div>
-</div>
-
-<p id="bmpTime"     style="color: white; font-weight: bold;font-size: xx-large; font-family: Calibri;"></p>
-<p id="tiffTime"    style="color: white; font-weight: bold;font-size: xx-large; font-family: Calibri;"></p>
-<p id="counterX"    style="color: white; font-weight: bold;font-size: xx-large; font-family: Calibri;"></p>
-<p id="temp"    style="color: white; font-weight: bold;font-size: xx-large; font-family: Calibri;"></p>
-
 </body>
 </html>

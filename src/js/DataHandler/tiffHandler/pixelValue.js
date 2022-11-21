@@ -48,7 +48,7 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTempPixel){
                 if(temp > result){
                     result = temp;
                 }
-                if(temp > 1300){                  //1027°C
+                if(temp > 273+47){                  //1027°C   1300           // Calilux         273+48
                     ctx.fillRect( x, y, 1, 1 );
                 }
 

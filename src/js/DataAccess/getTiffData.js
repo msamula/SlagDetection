@@ -30,7 +30,7 @@ function handleTiffData(response, user) {
         drawAOI(job[1], decoded[0].t256[0], decoded[0].t257[0]);        //t256 = image-width    t257 = image-height
 
         //areaTemp
-        areaTempPixel= areaTempPixelValue(tiffData, 750);
+        areaTempPixel= areaTempPixelValue(tiffData, 273+28);            //KELVIN        273+40      //Calilux 1000
         console.log(areaTempPixel);
         console.log(pixelToTemp(tiffData,areaTempPixel));
 
