@@ -1,5 +1,6 @@
 // 8 bit zu 16 bit verschoben und return des pixelwertes
 import {job} from "../../DataAccess/getJobInfo";
+import {chart, updateChart} from "../../Chart/chart";
 
 function calcPixelValue(img, x, y, imgWidth) {
     let rX = x * 2;                                     //erster und zweiter array-eintrag ergeben zusammen den ersten pixel von 16 bit bzw 2 byte
@@ -56,7 +57,10 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTempPixel){
             }
         }
     }
+
     document.getElementById('counterX').innerHTML = `scanned pixel: ${counterX}px [${((counterX/(imgWidth*imgHeight))*100).toFixed(3)}%]`;
+
+    updateChart(chart,'slag',(counterX/((yPlusHeight-Y)*(xPlusWidth-X)))*100);
 
     return result;
 }

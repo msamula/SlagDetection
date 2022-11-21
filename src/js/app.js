@@ -7,6 +7,7 @@ import {getToken} from "./DataAccess/getToken";
 import {getImage} from "./DataAccess/getImage";
 import {getTiffData} from "./DataAccess/getTiffData";
 import {getJobInfo} from "./DataAccess/getJobInfo";
+import {createChart} from "./Chart/chart";
 
 
 //login data
@@ -29,6 +30,8 @@ getToken(user.ip,user.clientID,user.clientSecret,user.username,user.password);
 getJobInfo(user.ip, 'slag');
 
 window.addEventListener('DOMContentLoaded', () => {
+
+    createChart();
 
     //get image
     getImage(user);
