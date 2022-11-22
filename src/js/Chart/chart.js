@@ -1,12 +1,12 @@
 import Chart from 'chart.js/auto';
 
-export let chart, chart2;
+export let slag, totalSlag;
 
 export function createChart(wert, wert2){
     const ctx = document.getElementById('slagChart');
     const ctx2 = document.getElementById('slagChart2');
 
-     chart = new Chart(ctx, {
+    slag = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ['Red'],
@@ -36,7 +36,7 @@ export function createChart(wert, wert2){
         }
     });
 
-     chart2 = new Chart(ctx2, {
+    totalSlag = new Chart(ctx2, {
         type: 'bar',
         data: {
             labels: ['Red'],

@@ -1,6 +1,9 @@
 // 8 bit zu 16 bit verschoben und return des pixelwertes
 import {job} from "../../DataAccess/getJobInfo";
-import {chart, updateChart} from "../../Chart/chart";
+import {slag, totalSlag, updateChart} from "../../Chart/chart";
+
+let allPixelAboveAreaTemp = 0;
+let allPixelAboveTargetTemp = 0;
 
 function calcPixelValue(img, x, y, imgWidth) {
     let rX = x * 2;                                     //erster und zweiter array-eintrag ergeben zusammen den ersten pixel von 16 bit bzw 2 byte
@@ -17,50 +20,58 @@ export function pixelToTemp(tiffData,pixelValue) {
     return tiffData.B/(Math.log((tiffData.R/(pixelValue-tiffData.RBFOffset))+tiffData.F));
 }
 
-export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTempPixel){
+export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, targetTemp){
     let canvas = document.getElementById("imgCanvas");
     canvas.width  = imgWidth;
     canvas.height = imgHeight;
     let ctx = canvas.getContext("2d");
     ctx.fillStyle = "rgba("+255+","+0+","+0+","+1+")";
-
     ctx.clearRect(0, 0, imgWidth, imgHeight);
 
-    let result=0;
-    let counterX = 0;
+    let highestPixelValueAOI = 0;
+    let pixelAboveAreaTemp = 0;
+    let pixelAboveTargetTemp = 0;
 
     let X = job[1][0][1][0];
     let xPlusWidth = job[1][0][2][0];
     let Y = job[1][0][1][1];
     let yPlusHeight = job[1][0][3][1];
 
-    for (let y = Y; y < yPlusHeight; y++) {
-        for (let x = X; x < xPlusWidth; x++) {    //x-Achse
+    for (let y = Y; y < yPlusHeight; y++) {                     //AOI
+        for (let x = X; x < xPlusWidth; x++) {
 
-/*     for (let y = 0; y < imgHeight; y++) {
+/*     for (let y = 0; y < imgHeight; y++) {                    //komplettes Bild
          for (let x = 0; x < imgWidth; x++) {    //x-Achse*/
 
             let pixelValue = calcPixelValue(img,x,y,imgWidth);
 
-            if(pixelValue >= areaTempPixel){
+            if(pixelValue >= areaTemp){
 
-                let temp = pixelToTemp(tiffData, pixelValue);
+                pixelAboveAreaTemp++;
 
-                if(temp > result){
-                    result = temp;
-                }
-                if(temp > 273+47){                  //1027°C   1300           // Calilux         273+48
+                if(pixelValue > targetTemp){
                     ctx.fillRect( x, y, 1, 1 );
+                    pixelAboveTargetTemp++;
                 }
 
-                counterX++;
+                //EXTRA
+                if(pixelValue > highestPixelValueAOI){
+                    highestPixelValueAOI = pixelValue;
+                }
             }
         }
     }
 
-    document.getElementById('counterX').innerHTML = `scanned pixel: ${counterX}px [${((counterX/(imgWidth*imgHeight))*100).toFixed(3)}%]`;
+    allPixelAboveAreaTemp += pixelAboveAreaTemp;
+    allPixelAboveTargetTemp += pixelAboveTargetTemp;
 
-    updateChart(chart,'slag',(counterX/((yPlusHeight-Y)*(xPlusWidth-X)))*100);
+    updateChart(slag,'slag',(pixelAboveTargetTemp/pixelAboveAreaTemp)*100);
+    updateChart(totalSlag,'total',(allPixelAboveTargetTemp/allPixelAboveAreaTemp)*100);
 
-    return result;
+    //EXTRA
+    document.getElementById('counterX').innerHTML = `pixel above area Temp in AOI to pixel of Image: ${pixelAboveAreaTemp}px [${((pixelAboveAreaTemp/(imgWidth*imgHeight))*100).toFixed(3)}%]`;
+
+    let highestTempAOI = pixelToTemp(tiffData, highestPixelValueAOI);
+
+    document.getElementById('highTemp').innerHTML ='highest Temp in AOI ' + (highestTempAOI).toFixed(2) +' Kelvin';
 }

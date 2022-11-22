@@ -6,10 +6,10 @@ import {job} from "./getJobInfo";
 import {drawAOI} from "../DataHandler/drawAOI";
 
 let start, end, sumTime = 0, counter = 0;
-let tiffData, areaTempPixel,tiffTagsLoaded = false;
+let tiffData, areaTemp, targetTemp,tiffTagsLoaded = false;
 
-function areaTempPixelValue(tiffData, temp){
-    for (let i = 0; i < Infinity; i++) {
+function TempToPixelValue(tiffData, temp){
+    for (let i = 704; i < Infinity; i++) {          //Pixelwert von 704 = 0 Kelvin
         if(temp<pixelToTemp(tiffData,i)){
             return i-1;
         }
@@ -21,32 +21,31 @@ function handleTiffData(response, user) {
     let decoded = UTIF.decode(response);
 
     if(!tiffTagsLoaded){
+
+        // get tiff tags
         let result1 = JSON.parse(decoded[0].t65104);
         let result2 = JSON.parse(decoded[0].t65105);
 
         tiffData = new TiffData(result1.calibParams[0].param.B,result1.calibParams[0].param.R,result1.calibParams[0].param.F,result1.calibParams[0].param.RBFOffset,result2.emissivity);
 
         //draw AOI
-        drawAOI(job[1], decoded[0].t256[0], decoded[0].t257[0]);        //t256 = image-width    t257 = image-height
+        drawAOI(job[1], decoded[0].t256[0], decoded[0].t257[0]);            //t256 = image-width    t257 = image-height
 
-        //areaTemp
-        areaTempPixel= areaTempPixelValue(tiffData, 273+46);            //KELVIN        273+40      //Calilux 1000
-        console.log(areaTempPixel);
-        console.log(pixelToTemp(tiffData,areaTempPixel));
+        //areaTemp+targetTemp
+        areaTemp = TempToPixelValue(tiffData, 973);            // Umgebungstemperatur    //KELVIN  Calilux      273+46      //Sequenz 1000
+        targetTemp = TempToPixelValue(tiffData, 1300)               // Schlacke               //KELVIN  Calilux      273+47      //Sequenz 1300
 
         tiffTagsLoaded = true;
-        console.log('tiff tags loaded');
+        console.log('...data loaded :D-><');
     }
 
     UTIF.decodeImages(response, decoded)
     let Img16Bit = decoded[1].data;
 
-    let highestTemp = pixelHandler(tiffData, Img16Bit, decoded[0].width, decoded[0].height, areaTempPixel);
-
-    document.getElementById('temp').innerHTML = (highestTemp-273.15).toFixed(2) +' °C';
+    pixelHandler(tiffData, Img16Bit, decoded[0].width, decoded[0].height, areaTemp, targetTemp);
 
 
-    //TIME
+    //TIME      EXTRA
     end = new Date();
     let time = end.getTime()-start.getTime();
     sumTime += time;
