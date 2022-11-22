@@ -92,7 +92,7 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
     if(countPixel<1){
         let date = new Date();
 
-        dateTime.innerHTML = `Date/Time: ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}  ${date.getHours()}:${date.getMinutes()}   (${date.getSeconds()} sec)`;
+        dateTime.innerHTML = `Date/Time: ${date.getDate()}.${date.getMonth()}.${date.getFullYear()}  ${(date.getHours()<10?'0':'') + date.getHours()}:${(date.getMinutes()<10?'0':'') + date.getMinutes()}   (${(date.getSeconds()<10?'0':'') + date.getSeconds()} sec)`;
         allPixelAboveAreaTemp = 0;
         allPixelAboveTargetTemp = 0;
     }
