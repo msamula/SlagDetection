@@ -1,9 +1,9 @@
 import UTIF from '../Helper/utif';
 import {token} from "./getToken";
 import {TiffData} from "../Models/tiffDataModel";
-import {pixelHandler, pixelToTemp} from "../DataHandler/tiffHandler/pixelValue";
+import {pixelHandler, pixelToTemp} from "../DataHandler/pixelValue";
 import {job} from "./getJobInfo";
-import {drawAOI} from "../DataHandler/drawAOI";
+import {drawAOI} from "../userInterface/drawAOI";
 
 let start, end, sumTime = 0, counter = 0;
 let tiffData, areaTemp, targetTemp,tiffTagsLoaded = false;

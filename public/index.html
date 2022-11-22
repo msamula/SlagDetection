@@ -36,10 +36,10 @@
 
             <div class="col-xxl-6 text-start" style="padding-left: 10%">
 
-                <p id="date"        class="myText"  >Date/Time: 21.11.2022  00:00</p>
+                <p id="dateTime"        class="myText"  >Date/Time: </p>
                 <p id="vessel"      class="myText"  >BOF Vessel: 1</p>
                 <p id="heat"        class="myText"  >Heat #: 8729</p>
-                <p id="tap"         class="myText"  >Tap Temperature: XXXX°C</p>
+                <p id="tapTemp"         class="myText"  >Tap Temperature: 0°C</p>
 
                 <div id="alarm" class="alert sign" role="alert" style="background-color: rgba(0, 255, 0,1)">
                     ALARM
@@ -50,10 +50,16 @@
                         <div>
                             <canvas id="slagChart" height="650%"></canvas>
                         </div>
+                        <div id="slag" class="alert sign2" role="alert">
+                            0%
+                        </div>
                     </div>
                     <div class="col-6">
                         <div>
                             <canvas id="slagChart2" height="650%"></canvas>
+                        </div>
+                        <div id="totalSlag" class="alert sign2" role="alert">
+                            0%
                         </div>
                     </div>
                 </div>
@@ -61,11 +67,10 @@
             </div>
         </div>
 
-        <div class="row" style="background-color: yellow; -webkit-text-fill-color: black">
+        <div class="row" style="background-color: yellow; -webkit-text-fill-color: black; margin-top: 3%">
             <p id="bmpTime"     class="myText text-start"></p>
             <p id="tiffTime"    class="myText text-start"></p>
             <p id="counterX"    class="myText text-start"></p>
-            <p id="highTemp"    class="myText text-start"></p>
         </div>
 
     </div>

@@ -83,16 +83,31 @@ body{
     }
 }
 
-.sign{
+.sign {
     text-align: center;
     white-space: nowrap;
     font-weight: bold;
-    border-width: 2px;
+    border-width: 1px;
     border-color: white;
     font-family: "Gill Sans", sans-serif;
     font-size: xx-large;
     padding: 0px;
     max-width: 200px;
+    border-radius: 0;
+}
+
+.sign2{
+    -webkit-text-fill-color: rgba(255, 0, 0, 1);
+    background-color: rgba(0,0,0,1);
+    border-width: 2px;
+    border-color: white;
+    text-align: center;
+    font-weight: bold;
+    font-family: "Gill Sans", sans-serif;
+    padding: 0px;
+    max-width: 100px;
+    border-radius: 0;
+    margin-left: 27%;
 }
 
 .myText{

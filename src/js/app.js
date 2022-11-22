@@ -7,7 +7,7 @@ import {getToken} from "./DataAccess/getToken";
 import {getImage} from "./DataAccess/getImage";
 import {getTiffData} from "./DataAccess/getTiffData";
 import {getJobInfo} from "./DataAccess/getJobInfo";
-import {createChart} from "./Chart/chart";
+import {createChart} from "./userInterface/chart";
 
 
 //login data
