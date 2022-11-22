@@ -51,7 +51,7 @@ export function createChart(wert, wert2){
         options: {
             scales: {
                 y: {
-                    max: 5,
+                    max: 100,
                     min: 0,
                     grid: {
                         display: false

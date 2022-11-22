@@ -62,14 +62,21 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
         }
     }
 
+    let countPixel = (pixelAboveAreaTemp/(imgWidth*imgHeight))*100;
+
     allPixelAboveAreaTemp += pixelAboveAreaTemp;
     allPixelAboveTargetTemp += pixelAboveTargetTemp;
+
+    if(countPixel<1){
+        allPixelAboveAreaTemp = 0;
+        allPixelAboveTargetTemp = 0;
+    }
 
     updateChart(slag,'slag',(pixelAboveTargetTemp/pixelAboveAreaTemp)*100);
     updateChart(totalSlag,'total',(allPixelAboveTargetTemp/allPixelAboveAreaTemp)*100);
 
     //EXTRA
-    document.getElementById('counterX').innerHTML = `pixel above area Temp in AOI to pixel of Image: ${pixelAboveAreaTemp}px [${((pixelAboveAreaTemp/(imgWidth*imgHeight))*100).toFixed(3)}%]`;
+    document.getElementById('counterX').innerHTML = `pixel above area Temp in AOI to pixel of Image: ${pixelAboveAreaTemp}px [${countPixel.toFixed(0)}%]`;
 
     let highestTempAOI = pixelToTemp(tiffData, highestPixelValueAOI);
 
