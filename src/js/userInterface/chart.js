@@ -1,10 +1,13 @@
 import Chart from 'chart.js/auto';
+import annotationPlugin from 'chartjs-plugin-annotation';
 
 export let slag, totalSlag;
 
 export function createChart(wert, wert2){
     const ctx = document.getElementById('slagChart');
     const ctx2 = document.getElementById('slagChart2');
+
+    Chart.register(annotationPlugin);
 
     slag = new Chart(ctx, {
         type: 'bar',
@@ -31,6 +34,19 @@ export function createChart(wert, wert2){
                     grid: {
                         display: false
                     }
+                }
+            },
+            plugins: {
+                annotation: {
+                    annotations: [{
+                        type: 'line',
+                        yMin: 50,
+                        yMax: 50,
+                        xMax: 1,
+                        scaleID: 'y-axis-0',
+                        borderColor: 'rgb(255, 0, 0)',
+                        borderWidth: 1
+                    }]
                 }
             }
         }
@@ -62,6 +78,19 @@ export function createChart(wert, wert2){
                         display: false
                     }
                 }
+            },
+            plugins: {
+                annotation: {
+                    annotations: [{
+                        type: 'line',
+                        yMin: 50,
+                        yMax: 50,
+                        xMax: 1,
+                        scaleID: 'y-axis-0',
+                        borderColor: 'rgb(255, 0, 0)',
+                        borderWidth: 1
+                    }]
+                }
             }
         }
     });
@@ -87,17 +116,3 @@ export function updateChart(chart, label, data){
     removeData(chart);
     addData(chart, label, data);
 }
-
-
-/*setTimeout(()=>{
-    removeData(chart);
-},10000);*/
-
-/*
-setInterval(()=>{
-    removeData(chart);
-    addData(chart,xaxis, wert);
-    wert = Math.floor(Math.random() * 100);
-    let date = new Date();
-    xaxis = date.getSeconds();
-},1000);*/
