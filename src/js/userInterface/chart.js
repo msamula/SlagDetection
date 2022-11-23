@@ -1,5 +1,5 @@
 import Chart from 'chart.js/auto';
-import annotationPlugin from 'chartjs-plugin-annotation';
+//import annotationPlugin from 'chartjs-plugin-annotation';
 
 export let slag, totalSlag;
 
@@ -7,7 +7,7 @@ export function createChart(wert, wert2){
     const ctx = document.getElementById('slagChart');
     const ctx2 = document.getElementById('slagChart2');
 
-    Chart.register(annotationPlugin);
+    //Chart.register(annotationPlugin);
 
     slag = new Chart(ctx, {
         type: 'bar',
@@ -36,7 +36,7 @@ export function createChart(wert, wert2){
                     }
                 }
             },
-            plugins: {
+/*            plugins: {
                 annotation: {
                     annotations: [{
                         type: 'line',
@@ -48,7 +48,7 @@ export function createChart(wert, wert2){
                         borderWidth: 1
                     }]
                 }
-            }
+            }*/
         }
     });
 
@@ -79,7 +79,7 @@ export function createChart(wert, wert2){
                     }
                 }
             },
-            plugins: {
+/*            plugins: {
                 annotation: {
                     annotations: [{
                         type: 'line',
@@ -91,7 +91,7 @@ export function createChart(wert, wert2){
                         borderWidth: 1
                     }]
                 }
-            }
+            }*/
         }
     });
 }

@@ -71,7 +71,11 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
                 pixelAboveAreaTemp++;
 
                 if(pixelValue > targetTemp){
-                    ctx.fillRect( x, y, 1, 1 );
+
+                    if( x%2 === 0 && y%2 === 0){
+                        ctx.fillRect( x, y, 2, 2 );
+                    }
+
                     pixelAboveTargetTemp++;
                 }
 
@@ -97,22 +101,25 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
         allPixelAboveTargetTemp = 0;
     }
 
-    slagEl.innerHTML = ((pixelAboveTargetTemp/pixelAboveAreaTemp)*100).toFixed(1) + '%';
-    totalSlagEl.innerHTML = ((allPixelAboveTargetTemp/allPixelAboveAreaTemp)*100).toFixed(1) + '%';
+    let pixelAbovePercentage = ((pixelAboveTargetTemp/pixelAboveAreaTemp)*100).toFixed(1);
+    let allPixelAbovePercentage = ((allPixelAboveTargetTemp/allPixelAboveAreaTemp)*100).toFixed(1);
 
-    if((allPixelAboveTargetTemp/allPixelAboveAreaTemp)*100<50){
+    slagEl.innerHTML = pixelAbovePercentage + '%';
+    totalSlagEl.innerHTML = allPixelAbovePercentage + '%';
+
+    if( allPixelAbovePercentage < 50 ){
         alarm.style.backgroundColor = 'rgba(0,255,0,1)';
     }
 
-    if((allPixelAboveTargetTemp/allPixelAboveAreaTemp)*100>=50){
+    if( allPixelAbovePercentage >= 50 ){
         alarm.style.backgroundColor = 'rgba(255,0,0,1)';
     }
 
-    updateChart(slag,'slag',(pixelAboveTargetTemp/pixelAboveAreaTemp)*100);
-    updateChart(totalSlag,'total',(allPixelAboveTargetTemp/allPixelAboveAreaTemp)*100);
+    updateChart(slag,'slag',pixelAbovePercentage);
+    updateChart(totalSlag,'total',allPixelAbovePercentage);
 
     //EXTRA
-    counterX.innerHTML = `pixel above area Temp in AOI to pixel of Image: ${pixelAboveAreaTemp}px [${countPixel.toFixed(0)}%]`;
+    //counterX.innerHTML = `pixel above area Temp in AOI to pixel of Image: ${pixelAboveAreaTemp}px [${countPixel.toFixed(0)}%]`;
 
     let highestTempAOI = pixelToTemp(tiffData, highestPixelValueAOI);
 

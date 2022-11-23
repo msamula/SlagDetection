@@ -31,6 +31,7 @@ getJobInfo(user.ip, 'slag');
 
 window.addEventListener('DOMContentLoaded', () => {
 
+    //display chart
     createChart();
 
     //get image
@@ -38,4 +39,5 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //get data from tiff tags
     getTiffData(user);
+
 });

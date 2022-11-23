@@ -37,6 +37,11 @@ export async function getImage(user)
         counter++;
         document.getElementById('bmpTime').innerHTML = (1000/(sumTime/counter)).toFixed(3) + ' HZ [BMP]';
 
+        if(counter === 200){
+            console.log(':-(><');
+            counter = 0;
+            sumTime = 0;
+        }
 
         //start new request after the previous one is done
         getImage(user);

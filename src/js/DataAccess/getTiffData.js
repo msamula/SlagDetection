@@ -53,6 +53,12 @@ function handleTiffData(response, user) {
     //console.log((sumTime/counter) + ' ms');
     document.getElementById('tiffTime').innerHTML = (1000/(sumTime/counter)).toFixed(3) + ' HZ [TIFF]';
 
+    if(counter === 200){
+        console.log(':-/><');
+        counter = 0;
+        sumTime = 0;
+    }
+
 
     getTiffData(user);
 }
