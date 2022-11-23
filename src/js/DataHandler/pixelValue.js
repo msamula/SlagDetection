@@ -122,7 +122,7 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
     updateChart(totalSlag,'total',allPixelAbovePercentage);
 
 
-    /*EXTRA */    counterX.innerHTML = `pixel above area Temp in AOI to pixel of Image: ${pixelAboveAreaTemp}px [${countPixel.toFixed(0)}%]`;
+    /*EXTRA     counterX.innerHTML = `pixel above area Temp in AOI to pixel of Image: ${pixelAboveAreaTemp}px [${countPixel.toFixed(0)}%]`;  */
 
     let highestTempAOI = (pixelToTemp(tiffData, highestPixelValueAOI)-273.15).toFixed(0);
 
