@@ -10,11 +10,9 @@ let elementsLoaded = false;
 
 function getElements(imgWidth, imgHeight){
     canvas = document.getElementById("imgCanvas");
-
     canvas.width  = imgWidth;
     canvas.height = imgHeight;
     ctx = canvas.getContext("2d", {willReadFrequently: true});
-    ctx.fillStyle = "rgba("+255+","+0+","+0+","+1+")";
 
     slagEl = document.getElementById('slag');
     totalSlagEl = document.getElementById('totalSlag');
@@ -49,10 +47,10 @@ export function pixelToTemp(tiffData,pixelValue) {
 function drawPixel (canvasData, x, y, imgWidth) {
     let index = (x + y * imgWidth) * 4;
 
-    canvasData.data[index + 0] = 255;
-    canvasData.data[index + 1] =   0;
-    canvasData.data[index + 2] =   0;
-    canvasData.data[index + 3] = 255;
+    canvasData.data[index]      = 255;
+    canvasData.data[index + 1]  =   0;
+    canvasData.data[index + 2]  =   0;
+    canvasData.data[index + 3]  = 255;
 }
 
 export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, targetTemp){
@@ -64,44 +62,38 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
     ctx.clearRect(0, 0, imgWidth, imgHeight);
     canvasData = ctx.getImageData(0, 0, imgWidth, imgHeight);
 
-    let highestPixelValueAOI = 0;                               // PixelValue = 704 -> 0 Kelvin ????
+    let highestPixelValueAOI = 704;                               // PixelValue = 704 -> 0 Kelvin ????
     let pixelAboveAreaTemp = 0;
     let pixelAboveTargetTemp = 0;
 
     for (let y = Y; y < yPlusHeight; y++) {                     //AOI
         for (let x = X; x < xPlusWidth; x++) {
 
-/*     for (let y = 0; y < imgHeight; y++) {                    //komplettes Bild
-         for (let x = 0; x < imgWidth; x++) {    //x-Achse*/
-
             let pixelValue = calcPixelValue(img,x,y,imgWidth);
 
             if(pixelValue >= areaTemp){
 
                 pixelAboveAreaTemp++;
-
                 if(pixelValue > targetTemp){
                     drawPixel(canvasData, x,y, imgWidth);
                     pixelAboveTargetTemp++;
                 }
 
-                //EXTRA
                 if(pixelValue > highestPixelValueAOI){
                     highestPixelValueAOI = pixelValue;
                 }
             }
         }
     }
-    //EXTRA
 
     ctx.putImageData(canvasData, 0, 0);
-
-    let countPixel = (pixelAboveAreaTemp/(imgWidth*imgHeight))*100;
 
     allPixelAboveAreaTemp += pixelAboveAreaTemp;
     allPixelAboveTargetTemp += pixelAboveTargetTemp;
 
-    //EXTRA
+    //EXTRA----------------------------
+    let countPixel = (pixelAboveAreaTemp/(imgWidth*imgHeight))*100;
+
     if(countPixel<1){
         let date = new Date();
 
@@ -109,12 +101,14 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
         allPixelAboveAreaTemp = 0;
         allPixelAboveTargetTemp = 0;
     }
+    //----------------------------------
+
 
     let pixelAbovePercentage = ((pixelAboveTargetTemp/pixelAboveAreaTemp)*100).toFixed(1);
     let allPixelAbovePercentage = ((allPixelAboveTargetTemp/allPixelAboveAreaTemp)*100).toFixed(1);
 
-    slagEl.innerHTML = pixelAbovePercentage + '%';
-    totalSlagEl.innerHTML = allPixelAbovePercentage + '%';
+    slagEl.innerHTML        = ( isNaN(pixelAbovePercentage)    ? '0.0' : pixelAbovePercentage) + '%';
+    totalSlagEl.innerHTML   = ( isNaN(allPixelAbovePercentage) ? '0.0' : allPixelAbovePercentage) + '%';
 
     if( allPixelAbovePercentage < 50 ){
         alarm.style.backgroundColor = 'rgba(0,255,0,1)';
@@ -127,10 +121,10 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
     updateChart(slag,'slag',pixelAbovePercentage);
     updateChart(totalSlag,'total',allPixelAbovePercentage);
 
-    //EXTRA
-    //counterX.innerHTML = `pixel above area Temp in AOI to pixel of Image: ${pixelAboveAreaTemp}px [${countPixel.toFixed(0)}%]`;
 
-    let highestTempAOI = pixelToTemp(tiffData, highestPixelValueAOI);
+    /*EXTRA */    counterX.innerHTML = `pixel above area Temp in AOI to pixel of Image: ${pixelAboveAreaTemp}px [${countPixel.toFixed(0)}%]`;
 
-    tapTemp.innerHTML = 'Tap Temperature:  ' + (highestTempAOI-273.15).toFixed(0) + '°C';
+    let highestTempAOI = (pixelToTemp(tiffData, highestPixelValueAOI)-273.15).toFixed(0);
+
+    tapTemp.innerHTML = 'Tap Temperature:  ' + (highestTempAOI == -273 ? '' : highestTempAOI) + '°C';
 }
