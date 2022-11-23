@@ -5,7 +5,7 @@ import {slag, totalSlag, updateChart} from "../userInterface/chart";
 let allPixelAboveAreaTemp = 0;
 let allPixelAboveTargetTemp = 0;
 
-let canvas, ctx, slagEl, totalSlagEl, alarm, counterX, dateTime, tapTemp, X, Y, xPlusWidth, yPlusHeight;
+let canvas, ctx, canvasData, slagEl, totalSlagEl, alarm, counterX, dateTime, tapTemp, X, Y, xPlusWidth, yPlusHeight;
 let elementsLoaded = false;
 
 function getElements(imgWidth, imgHeight){
@@ -13,7 +13,7 @@ function getElements(imgWidth, imgHeight){
 
     canvas.width  = imgWidth;
     canvas.height = imgHeight;
-    ctx = canvas.getContext("2d");
+    ctx = canvas.getContext("2d", {willReadFrequently: true});
     ctx.fillStyle = "rgba("+255+","+0+","+0+","+1+")";
 
     slagEl = document.getElementById('slag');
@@ -46,6 +46,15 @@ export function pixelToTemp(tiffData,pixelValue) {
     return tiffData.B/(Math.log((tiffData.R/(pixelValue-tiffData.RBFOffset))+tiffData.F));
 }
 
+function drawPixel (canvasData, x, y, imgWidth) {
+    let index = (x + y * imgWidth) * 4;
+
+    canvasData.data[index + 0] = 255;
+    canvasData.data[index + 1] =   0;
+    canvasData.data[index + 2] =   0;
+    canvasData.data[index + 3] = 255;
+}
+
 export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, targetTemp){
 
     if(!elementsLoaded){
@@ -53,6 +62,7 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
     }
 
     ctx.clearRect(0, 0, imgWidth, imgHeight);
+    canvasData = ctx.getImageData(0, 0, imgWidth, imgHeight);
 
     let highestPixelValueAOI = 0;                               // PixelValue = 704 -> 0 Kelvin ????
     let pixelAboveAreaTemp = 0;
@@ -71,11 +81,7 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
                 pixelAboveAreaTemp++;
 
                 if(pixelValue > targetTemp){
-
-                    if( x%2 === 0 && y%2 === 0){
-                        ctx.fillRect( x, y, 2, 2 );
-                    }
-
+                    drawPixel(canvasData, x,y, imgWidth);
                     pixelAboveTargetTemp++;
                 }
 
@@ -87,6 +93,9 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
         }
     }
     //EXTRA
+
+    ctx.putImageData(canvasData, 0, 0);
+
     let countPixel = (pixelAboveAreaTemp/(imgWidth*imgHeight))*100;
 
     allPixelAboveAreaTemp += pixelAboveAreaTemp;
