@@ -1,6 +1,6 @@
 // 8 bit zu 16 bit verschoben und return des pixelwertes
 import {job} from "../DataAccess/getJobInfo";
-import {slag, totalSlag, updateChart} from "../userInterface/chart";
+import {slag, totalSlag, updateChart, updateTimeChart} from "../userInterface/chart";
 
 let allPixelAboveAreaTemp = 0;
 let allPixelAboveTargetTemp = 0;
@@ -120,6 +120,8 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
 
     updateChart(slag,'slag',pixelAbovePercentage);
     updateChart(totalSlag,'total',allPixelAbovePercentage);
+
+    updateTimeChart(pixelAbovePercentage);
 
 
     /*EXTRA     counterX.innerHTML = `pixel above area Temp in AOI to pixel of Image: ${pixelAboveAreaTemp}px [${countPixel.toFixed(0)}%]`;  */

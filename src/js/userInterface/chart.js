@@ -1,11 +1,12 @@
 import Chart from 'chart.js/auto';
 //import annotationPlugin from 'chartjs-plugin-annotation';
 
-export let slag, totalSlag;
+export let slag, totalSlag, timeChart;
 
-export function createChart(wert, wert2){
+export function createChart(){
     const ctx = document.getElementById('slagChart');
     const ctx2 = document.getElementById('slagChart2');
+    const ctx3 = document.getElementById('timeChart');
 
     //Chart.register(annotationPlugin);
 
@@ -15,7 +16,7 @@ export function createChart(wert, wert2){
             labels: ['Red'],
             datasets: [{
                 label: 'Slag',
-                data: [wert],
+                data: [],
                 borderWidth: 1,
                 backgroundColor: '#FF0000',
                 color: '#FFF'
@@ -58,7 +59,7 @@ export function createChart(wert, wert2){
             labels: ['Red'],
             datasets: [{
                 label: 'Slag',
-                data: [wert2],
+                data: [],
                 borderWidth: 1,
                 backgroundColor: '#FF0000',
                 color: '#FFF'
@@ -79,21 +80,42 @@ export function createChart(wert, wert2){
                     }
                 }
             },
-/*            plugins: {
-                annotation: {
-                    annotations: [{
-                        type: 'line',
-                        yMin: 50,
-                        yMax: 50,
-                        xMax: 1,
-                        scaleID: 'y-axis-0',
-                        borderColor: 'rgb(255, 0, 0)',
-                        borderWidth: 1
-                    }]
-                }
-            }*/
         }
     });
+
+    timeChart = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            labels: [''],
+            datasets: [{
+                label: 'Slag',
+                data: [],
+                borderWidth: 1,
+                backgroundColor: '#FF0000',
+                color: '#FFF'
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    max: 100,
+                    min: 0,
+                    grid: {
+                        display: false
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    for (let i = 0; i < 100; i++) {
+        addData(timeChart, '', 0);
+    }
 }
 
 function removeData(chart) {
@@ -115,4 +137,22 @@ function addData(chart, label, data) {
 export function updateChart(chart, label, data){
     removeData(chart);
     addData(chart, label, data);
+}
+
+
+export function updateTimeChart(data){
+    let date = new Date();
+
+    //add data
+    timeChart.data.labels.push(`${(date.getMinutes()<10?'0':'') + date.getMinutes()}:${(date.getSeconds()<10?'0':'') + date.getSeconds()}`);
+    timeChart.data.datasets[0].data.push(data);
+
+
+    //remove data
+    if(timeChart.data.labels.length > 100){
+        timeChart.data.labels.shift();
+        timeChart.data.datasets[0].data.shift();
+    }
+
+    timeChart.update('none');
 }
