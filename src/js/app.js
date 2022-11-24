@@ -8,6 +8,7 @@ import {getImage} from "./DataAccess/getImage";
 import {getTiffData} from "./DataAccess/getTiffData";
 import {getJobInfo} from "./DataAccess/getJobInfo";
 import {createChart} from "./userInterface/chart";
+import {loadStatus} from "./userInterface/loadStatus";
 
 
 //login data
@@ -31,8 +32,12 @@ getJobInfo(user.ip, 'slag');
 
 window.addEventListener('DOMContentLoaded', () => {
 
-    //display chart
+    //Userinterface
     createChart();
+    loadStatus(user.ip);
+
+
+/*    ---     MAIN    ---*/
 
     //get image
     getImage(user);

@@ -129,3 +129,10 @@ body{
 .row{
     margin-top: 1%;
 }
+
+.info{
+    font-size: medium;
+    margin: 0px;
+    white-space: nowrap;
+    text-align: start;
+}
