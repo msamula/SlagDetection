@@ -11,8 +11,6 @@ export function loadStatus(ip){
 
     let deviceInfo = JSON.parse(xmlHttp.responseText);
 
-    console.log(deviceInfo);
-
     document.getElementById('friendlyName').innerHTML =`${deviceInfo.friendlyName}`;
     document.getElementById('activePackage').innerHTML =`${deviceInfo.activePackage}`;
     document.getElementById('modelName').innerHTML =`${deviceInfo.modelName}`;
