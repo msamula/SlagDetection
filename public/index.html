@@ -160,33 +160,33 @@
                                 <div>
                                     <div style="display: flex; justify-content: space-between;">
                                         <p class="text-start">Area Temperature Threshold</p>
-                                        <p style="background-color: rgba(255,255,255,0.2); width: 100px">1000 Kelvin</p>
+                                        <p id="areaTempThresholdDisplay" style="background-color: rgba(255,255,255,0.2); width: 100px">1000 Kelvin</p>
                                     </div>
-                                    <input type="range" class="form-range" min="0" max="1000" step="1" id="areaTempRange" >
+                                    <input id="areaTempThreshold" type="range" class="form-range" min="0" max="1200" step="1" id="areaTempRange" >
                                 </div>
 
                                 <div>
                                     <div style="display: flex; justify-content: space-between;">
                                         <p class="text-start">Slag Temperature Threshold</p>
-                                        <p style="background-color: rgba(255,255,255,0.2); width: 100px">1300 Kelvin</p>
+                                        <p id="slagTempThresholdDisplay" style="background-color: rgba(255,255,255,0.2); width: 100px">1300 Kelvin</p>
                                     </div>
-                                    <input type="range" class="form-range" min="1000" max="1500" step="1" id="slagTempRange" >
+                                    <input id="slagTempThreshold" type="range" class="form-range" min="1000" max="1500" step="1" id="slagTempRange" >
                                 </div>
 
                                 <div>
                                     <div style="display: flex; justify-content: space-between;">
                                         <p class="text-start">Slag % Threshold</p>
-                                        <p style="background-color: rgba(255,255,255,0.2); width: 100px">40 %</p>
+                                        <p id="slagPercDisplay" style="background-color: rgba(255,255,255,0.2); width: 100px">40 %</p>
                                     </div>
-                                    <input type="range" class="form-range" min="0" max="100" step="1" id="slagThreshold" >
+                                    <input id="slagPerc" type="range" class="form-range" min="0" max="100" step="1" id="slagThreshold" >
                                 </div>
 
                                 <div>
                                     <div style="display: flex; justify-content: space-between;">
                                         <p class="text-start" style="white-space: nowrap;">Total Slag % Threshold</p>
-                                        <p style="background-color: rgba(255,255,255,0.2); white-space: nowrap; width: 100px">2 %</p>
+                                        <p id="totalSlagPercDisplay" style="background-color: rgba(255,255,255,0.2); white-space: nowrap; width: 100px">2 %</p>
                                     </div>
-                                    <input type="range" class="form-range" min="0" max="100" step="1" id="totalSlagThreshold" >
+                                    <input id="totalSlagPerc" type="range" class="form-range" min="0" max="20" step="0.5" id="totalSlagThreshold" >
                                 </div>
                             </div>
 
@@ -197,7 +197,7 @@
                                 <div class="btn-group text-center" role="group" style="max-width: 500px">
                                     <button class="btn btn-sm btn-light" id="refreshImage" title="refresh Image"><img src="./media/refresh_30.png" style="max-height: 20px;"> refresh Image</button>
                                     <button class="btn btn-sm btn-warning" id="drawAOIBtn2" title=""><img src="./media/rect_30.png" style="max-height: 20px;"> draw Rectangle</button>
-                                    <button class="btn btn-sm btn-danger" id="drawAOIBtn3" title=""><img src="./media/save_30.png" style="max-height: 20px;"> save</button>
+                                    <button class="btn btn-sm btn-danger" id="drawAOIBtn3" title=""><img src="./media/save_30.png" style="max-height: 20px;"> save AOI</button>
                                 </div>
 
                                 <div class="row">
