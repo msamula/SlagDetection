@@ -4,6 +4,7 @@ import {TiffData} from "../Models/tiffDataModel";
 import {pixelHandler, pixelToTemp} from "../DataHandler/pixelValue";
 import {job} from "./getJobInfo";
 import {drawAOI} from "../userInterface/drawAOI";
+import {areaMaxTemp, targetMaxTemp, loadTiffTags} from "../userInterface/eventListener";
 
 let start, end, sumTime = 0, counter = 0;
 let tiffData, areaTemp, targetTemp,tiffTagsLoaded = false;
@@ -20,8 +21,7 @@ function TempToPixelValue(tiffData, temp){
 function handleTiffData(response, user) {
     let decoded = UTIF.decode(response);
 
-    if(!tiffTagsLoaded){
-
+    if(tiffTagsLoaded === loadTiffTags){
         // get tiff tags
         let result1 = JSON.parse(decoded[0].t65104);
         let result2 = JSON.parse(decoded[0].t65105);
@@ -32,10 +32,10 @@ function handleTiffData(response, user) {
         drawAOI(job[1], decoded[0].t256[0], decoded[0].t257[0]);            //t256 = image-width    t257 = image-height
 
         //areaTemp+targetTemp
-        areaTemp = TempToPixelValue(tiffData, 273+30);                 // Umgebungstemperatur    //KELVIN  Calilux      273+30      //Sequenz 1000
-        targetTemp = TempToPixelValue(tiffData, 273+47)               // Schlacke               //KELVIN  Calilux      273+47      //Sequenz 1300
+        areaTemp = TempToPixelValue(tiffData, areaMaxTemp);
+        targetTemp = TempToPixelValue(tiffData, targetMaxTemp)
 
-        tiffTagsLoaded = true;
+        tiffTagsLoaded === false ? tiffTagsLoaded = true : tiffTagsLoaded = false;
         console.log('...data loaded :D-><');
     }
 
