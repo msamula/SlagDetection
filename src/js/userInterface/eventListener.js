@@ -1,6 +1,20 @@
 import {refreshImage} from "./configure";
+import {startRect, endRect} from "./drawRectangle";
 
 export function addBtnEvents(){
+    let drawAOIBtn = document.getElementById('drawAOIBtn');
+    let drawAOICanvas = document.getElementById('drawAOICanvas');
+
+    drawAOIBtn.addEventListener('click', ()=>{
+
+        drawAOICanvas.addEventListener('mousedown', (e)=>{
+            startRect(drawAOICanvas,e);
+        });
+
+        drawAOICanvas.addEventListener('mouseup', (e)=>{
+            endRect(drawAOICanvas,e);
+        });
+    })
 
     let areaTempThreshold = document.getElementById('areaTempThreshold');
     let slagTempThreshold = document.getElementById('slagTempThreshold');

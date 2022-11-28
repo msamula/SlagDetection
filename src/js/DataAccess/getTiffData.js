@@ -32,8 +32,8 @@ function handleTiffData(response, user) {
         drawAOI(job[1], decoded[0].t256[0], decoded[0].t257[0]);            //t256 = image-width    t257 = image-height
 
         //areaTemp+targetTemp
-        areaTemp = TempToPixelValue(tiffData, 1000);                 // Umgebungstemperatur    //KELVIN  Calilux      273+46      //Sequenz 1000
-        targetTemp = TempToPixelValue(tiffData, 1300)               // Schlacke               //KELVIN  Calilux      273+47      //Sequenz 1300
+        areaTemp = TempToPixelValue(tiffData, 273+30);                 // Umgebungstemperatur    //KELVIN  Calilux      273+30      //Sequenz 1000
+        targetTemp = TempToPixelValue(tiffData, 273+47)               // Schlacke               //KELVIN  Calilux      273+47      //Sequenz 1300
 
         tiffTagsLoaded = true;
         console.log('...data loaded :D-><');
