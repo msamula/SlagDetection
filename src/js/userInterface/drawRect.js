@@ -3,11 +3,14 @@ let coordinates = [];
 let canvas;
 
 function getMousePos(evt) {
-    let rect = canvas.getBoundingClientRect(),
-        scaleX = canvas.width / rect.width,
-        scaleY = canvas.height / rect.height;
+    let width = 672;
+    let height = 504;
 
-    console.log(canvas.width);
+
+    let rect = canvas.getBoundingClientRect(),
+        scaleX = width / rect.width,
+        scaleY = height / rect.height;
+
     return {
         x: (evt.clientX - rect.left) * scaleX,
         y: (evt.clientY - rect.top) * scaleY
