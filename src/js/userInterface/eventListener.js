@@ -1,5 +1,5 @@
 import {refreshImage} from "./configure";
-import {mouseDown} from './drawRect'
+import {mouseDown, removeMousedown} from './drawRect'
 
 export let areaMaxTemp = 273+30;          // Umgebungstemperatur    //KELVIN  Calilux      273+30      //Sequenz 1000
 export let targetMaxTemp = 273+47;        // Schlacke               //KELVIN  Calilux      273+47      //Sequenz 1300
@@ -10,10 +10,18 @@ export let totalSlag = 50;               //ÄNDERN!!!!!!!!!!!!!!
 
 export function addBtnEvents(){
 
-    document.getElementById('drawAOIBtn').addEventListener('click', ()=> {
+    let drawAoiBtn = document.getElementById('drawAOIBtn');
 
+    drawAoiBtn.addEventListener('click', ()=> {
+        drawAoiBtn.disabled = true;
         document.getElementById('drawAoiSvg').style.display = 'initial';
         document.getElementById('drawAOICanvas').addEventListener('mousedown', mouseDown);
+    });
+
+    document.getElementById('saveAOIBtn').addEventListener('click',()=>{
+        drawAoiBtn.innerHTML = '<img src="./media/rect_30.png" style="max-height: 20px;"> redraw Rectangle';
+        drawAoiBtn.disabled = false;
+        removeMousedown();
     });
 
 
