@@ -7,9 +7,9 @@ import {drawAOI} from "../userInterface/drawAOI";
 import {areaMaxTemp, targetMaxTemp, loadTiffTags} from "../userInterface/eventListener";
 
 let start, end, sumTime = 0, counter = 0;
-let tiffData, areaTemp, targetTemp,tiffTagsLoaded = false;
+let tiffData, areaTemp, targetTemp,tiffTagsLoaded = false, pixelValuesUpdated = false;
 
-function TempToPixelValue(tiffData, temp){
+function tempToPixelValue(tiffData, temp){
     for (let i = 704; i < Infinity; i++) {          //Pixelwert von 704 = 0 Kelvin
         if(temp<pixelToTemp(tiffData,i)){
             return i-1;
@@ -21,7 +21,8 @@ function TempToPixelValue(tiffData, temp){
 function handleTiffData(response, user) {
     let decoded = UTIF.decode(response);
 
-    if(tiffTagsLoaded === loadTiffTags){
+    if(!tiffTagsLoaded){
+
         // get tiff tags
         let result1 = JSON.parse(decoded[0].t65104);
         let result2 = JSON.parse(decoded[0].t65105);
@@ -31,12 +32,19 @@ function handleTiffData(response, user) {
         //draw AOI
         drawAOI(job[1], decoded[0].t256[0], decoded[0].t257[0]);            //t256 = image-width    t257 = image-height
 
-        //areaTemp+targetTemp
-        areaTemp = TempToPixelValue(tiffData, areaMaxTemp);
-        targetTemp = TempToPixelValue(tiffData, targetMaxTemp)
-
-        tiffTagsLoaded === false ? tiffTagsLoaded = true : tiffTagsLoaded = false;
+        tiffTagsLoaded = true;
         console.log('...data loaded :D-><');
+    }
+
+    if(pixelValuesUpdated === loadTiffTags){
+
+        //areaTemp+targetTemp
+        areaTemp = tempToPixelValue(tiffData, areaMaxTemp);
+        targetTemp = tempToPixelValue(tiffData, targetMaxTemp)
+
+        pixelValuesUpdated === false ? pixelValuesUpdated = true : pixelValuesUpdated = false;
+
+        console.log('...pixel values changed');
     }
 
     UTIF.decodeImages(response, decoded)

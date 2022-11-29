@@ -1,6 +1,7 @@
 // 8 bit zu 16 bit verschoben und return des pixelwertes
 import {job} from "../DataAccess/getJobInfo";
-import {slag, totalSlag, updateChart, updateTimeChart} from "../userInterface/chart";
+import {slagChart, totalSlagChart, updateChart, updateTimeChart} from "../userInterface/chart";
+import {slag, totalSlag} from "../userInterface/eventListener";
 
 let allPixelAboveAreaTemp = 0;
 let allPixelAboveTargetTemp = 0;
@@ -110,16 +111,17 @@ export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, target
     slagEl.innerHTML        = ( isNaN(pixelAbovePercentage)    ? '0.0' : pixelAbovePercentage) + '%';
     totalSlagEl.innerHTML   = ( isNaN(allPixelAbovePercentage) ? '0.0' : allPixelAbovePercentage) + '%';
 
-    if( allPixelAbovePercentage < 50 ){
+
+    if( allPixelAbovePercentage < totalSlag && pixelAbovePercentage < slag){
         alarm.style.backgroundColor = 'rgba(0,255,0,1)';
     }
 
-    if( allPixelAbovePercentage >= 50 ){
+    if( allPixelAbovePercentage >= totalSlag || pixelAbovePercentage >= slag){
         alarm.style.backgroundColor = 'rgba(255,0,0,1)';
     }
 
-    updateChart(slag,'slag',pixelAbovePercentage);
-    updateChart(totalSlag,'total',allPixelAbovePercentage);
+    updateChart(slagChart,'slag',pixelAbovePercentage);
+    updateChart(totalSlagChart,'total',allPixelAbovePercentage);
 
     updateTimeChart(pixelAbovePercentage);
 

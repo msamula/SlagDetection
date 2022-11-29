@@ -24,14 +24,12 @@ export async function getImage(user)
         let blob = await response.blob();
         image.src = URL.createObjectURL(blob);
 
-        // The URL.revokeObjectURL() static method releases an existing object URL which was previously created by calling URL.createObjectURL().
-        // Call this method when you've finished using an object URL to let the browser know not to keep the reference to the file any longer.
         image.onload = () => {
             URL.revokeObjectURL(image.src);
         }
 
 
-        //TIME
+        //EXTRA TIME
         end = new Date();
         sumTime += end.getTime()-start.getTime();
         counter++;

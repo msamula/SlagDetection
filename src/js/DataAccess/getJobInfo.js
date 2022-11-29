@@ -1,6 +1,6 @@
-// coordinates for the area of interest(aoi) from job
 import {token} from "./getToken";
 
+// coordinates for the area of interest(aoi) from job
 function getCoordinates(json) {
     let roisCount = json.rois.length;
 

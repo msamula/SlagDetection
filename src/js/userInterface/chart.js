@@ -1,7 +1,7 @@
 import Chart from 'chart.js/auto';
 //import annotationPlugin from 'chartjs-plugin-annotation';
 
-export let slag, totalSlag, timeChart;
+export let slagChart, totalSlagChart, timeChart;
 
 export function createChart(){
     const ctx = document.getElementById('slagChart');
@@ -10,7 +10,7 @@ export function createChart(){
 
     //Chart.register(annotationPlugin);
 
-    slag = new Chart(ctx, {
+    slagChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ['Red'],
@@ -53,7 +53,7 @@ export function createChart(){
         }
     });
 
-    totalSlag = new Chart(ctx2, {
+    totalSlagChart = new Chart(ctx2, {
         type: 'bar',
         data: {
             labels: ['Red'],
