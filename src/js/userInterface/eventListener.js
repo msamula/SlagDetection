@@ -22,6 +22,7 @@ export function addBtnEvents(){
         drawAoiBtn.innerHTML = '<img src="./media/rect_30.png" style="max-height: 20px;"> redraw Rectangle';
         drawAoiBtn.disabled = false;
         removeMousedown();
+        loadTiffTags === false ? loadTiffTags = true : loadTiffTags = false;
     });
 
 

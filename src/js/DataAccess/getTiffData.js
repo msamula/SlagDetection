@@ -2,9 +2,10 @@ import UTIF from '../Helper/utif';
 import {token} from "./getToken";
 import {TiffData} from "../Models/tiffDataModel";
 import {pixelHandler, pixelToTemp} from "../DataHandler/pixelValue";
-import {job} from "./getJobInfo";
+//import {job} from "./getJobInfo";
 import {drawAOI} from "../userInterface/drawAOI";
 import {areaMaxTemp, targetMaxTemp, loadTiffTags} from "../userInterface/eventListener";
+import {coordinates} from "../userInterface/drawRect";
 
 let start, end, sumTime = 0, counter = 0;
 let tiffData, areaTemp, targetTemp,tiffTagsLoaded = false, pixelValuesUpdated = false;
@@ -29,8 +30,9 @@ function handleTiffData(response, user) {
 
         tiffData = new TiffData(result1.calibParams[0].param.B,result1.calibParams[0].param.R,result1.calibParams[0].param.F,result1.calibParams[0].param.RBFOffset,result2.emissivity);
 
-        //draw AOI
+        /*//draw AOI
         drawAOI(job[1], decoded[0].t256[0], decoded[0].t257[0]);            //t256 = image-width    t257 = image-height
+*/
 
         tiffTagsLoaded = true;
         console.log('...data loaded :D-><');
@@ -40,7 +42,10 @@ function handleTiffData(response, user) {
 
         //areaTemp+targetTemp
         areaTemp = tempToPixelValue(tiffData, areaMaxTemp);
-        targetTemp = tempToPixelValue(tiffData, targetMaxTemp)
+        targetTemp = tempToPixelValue(tiffData, targetMaxTemp);
+
+        //draw AOI
+        drawAOI(coordinates, decoded[0].t256[0], decoded[0].t257[0]);            //t256 = image-width    t257 = image-height
 
         pixelValuesUpdated === false ? pixelValuesUpdated = true : pixelValuesUpdated = false;
 

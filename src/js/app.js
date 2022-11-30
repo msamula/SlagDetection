@@ -29,7 +29,7 @@ let user = new User(ipAddress,username,password,clientID,clientSecret);
 getToken(user.ip,user.clientID,user.clientSecret,user.username,user.password);
 
 //get Job Info
-getJobInfo(user.ip, 'slag');
+//getJobInfo(user.ip, 'slag');
 
 window.addEventListener('DOMContentLoaded', () => {
 

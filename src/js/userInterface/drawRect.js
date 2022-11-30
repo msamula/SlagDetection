@@ -1,6 +1,8 @@
 let canvas, rect, bluePoint, redPoint;
 let start = {};
-export let coordinates = [];
+
+//coordinates for AOI
+export let coordinates = [['RectLine',[ 142, 65],[ 308, 65], [ 308, 232], [ 142, 232]]];
 
 // get mouse position
 function getMousePos(evt) {
@@ -45,7 +47,8 @@ function mouseMove(e) {
     let width  = Math.abs(x - start.x);
     let height  = Math.abs(y - start.y);
 
-    coordinates = ['RectLine',[xStart.toFixed(0)/2, yStart.toFixed(0)/2],[xStart.toFixed(0)/2, yStart.toFixed(0)/2], xEnd.toFixed(0)/2, yEnd.toFixed(0)/2];
+    //hard coded !!!!       /2
+    coordinates = [['RectLine',[Number((xStart/2).toFixed(0)), Number((yStart/2).toFixed(0))],[Number((xEnd/2).toFixed(0)), Number((yStart/2).toFixed(0))], [Number((xEnd/2).toFixed(0)), Number((yEnd/2).toFixed(0))], [Number((xStart/2).toFixed(0)), Number((yEnd/2).toFixed(0))]]];
 
     rect.setAttribute('x', `${xStart}`);
     rect.setAttribute('y', `${yStart}`);

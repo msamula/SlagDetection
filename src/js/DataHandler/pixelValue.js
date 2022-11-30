@@ -1,7 +1,8 @@
 // 8 bit zu 16 bit verschoben und return des pixelwertes
-import {job} from "../DataAccess/getJobInfo";
+//import {job} from "../DataAccess/getJobInfo";
 import {slagChart, totalSlagChart, updateChart, updateTimeChart} from "../userInterface/chart";
-import {slag, totalSlag} from "../userInterface/eventListener";
+import {loadTiffTags, slag, totalSlag} from "../userInterface/eventListener";
+import {coordinates} from "../userInterface/drawRect";
 
 let allPixelAboveAreaTemp = 0;
 let allPixelAboveTargetTemp = 0;
@@ -22,12 +23,17 @@ function getElements(imgWidth, imgHeight){
     dateTime = document.getElementById('dateTime');
     tapTemp = document.getElementById('tapTemp');
 
-    X = job[1][0][1][0];
+/*    X = job[1][0][1][0];
     xPlusWidth = job[1][0][2][0];
     Y = job[1][0][1][1];
-    yPlusHeight = job[1][0][3][1];
+    yPlusHeight = job[1][0][3][1];*/
 
-    elementsLoaded = true;
+    X = coordinates[0][1][0];
+    xPlusWidth = coordinates[0][2][0];
+    Y = coordinates[0][1][1];
+    yPlusHeight = coordinates[0][3][1];
+
+    elementsLoaded === false ? elementsLoaded = true : elementsLoaded = false;
 }
 
 function calcPixelValue(img, x, y, imgWidth) {
@@ -56,7 +62,7 @@ function drawPixel (canvasData, x, y, imgWidth) {
 
 export function pixelHandler(tiffData,img, imgWidth, imgHeight, areaTemp, targetTemp){
 
-    if(!elementsLoaded){
+    if(elementsLoaded === loadTiffTags){
         getElements(imgWidth, imgHeight);
     }
 
