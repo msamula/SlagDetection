@@ -8,7 +8,7 @@ import {getImage} from "./DataAccess/getImage";
 import {getTiffData} from "./DataAccess/getTiffData";
 import {getJobInfo} from "./DataAccess/getJobInfo";
 import {createChart} from "./userInterface/chart";
-import {loadStatus} from "./userInterface/loadStatus";
+import {loadInfo} from "./userInterface/loadInfo";
 import {addBtnEvents} from "./userInterface/eventListener";
 
 
@@ -36,7 +36,7 @@ window.addEventListener('DOMContentLoaded', () => {
     //Userinterface
     addBtnEvents();
     createChart();
-    loadStatus(user.ip);
+    loadInfo(user.ip);
 
 
 /*    ---     MAIN    ---*/
